@@ -7,13 +7,14 @@ using UnityEngine;
 
 public class GameView : MonoBehaviour
 {
+    public BoardPiece BoardPiecePrefab;
     private List<BoardPiece> boardPieces = new List<BoardPiece>(); 
     
     public void UpdateView(State state)
     {
         foreach (var boardPieces in this.boardPieces)
         {
-            Destroy(boardPieces);
+            Destroy(boardPieces.gameObject);
         }
         boardPieces.Clear();
 
@@ -21,8 +22,20 @@ public class GameView : MonoBehaviour
         {
             for (int y = 0; y < state.gridHeight; y++)
             {
-                
+                var boardPiece = Instantiate(BoardPiecePrefab, new Vector3(x, y), Quaternion.identity);
+                boardPiece.sprite.color = Color.green;
+                boardPieces.Add(boardPiece);
             }
         }
+
+        var player = Instantiate(BoardPiecePrefab, new Vector3(state.player.x, state.player.y, -0.1f), Quaternion.identity);
+        player.sprite.color = Color.blue;
+        boardPieces.Add(player);
+        var enemy = Instantiate(BoardPiecePrefab, new Vector3(state.enemy.x, state.enemy.y, -0.1f), Quaternion.identity);
+        enemy.sprite.color = Color.red;
+        boardPieces.Add(enemy);
+        var goal = Instantiate(BoardPiecePrefab, new Vector3(state.goal.x, state.goal.y, -0.05f), Quaternion.identity);
+        goal.sprite.color = Color.yellow;
+        boardPieces.Add(goal);
     }
 }

@@ -8,5 +8,5 @@ using UnityEngine;
 public class BoardPiece : MonoBehaviour
 {
   public SpriteRenderer sprite;
-    ;
+  
 }
